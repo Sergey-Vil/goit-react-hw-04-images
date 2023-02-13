@@ -5,13 +5,14 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import Button from './Buton/Button';
 import Loader from './Loader/Loader';
 
-const ELEMENTS = 12;
+// const ELEMENTS = 12;
 
 export const App = () => {
   const [images, setImages] = useState([]);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
+  const [elements, setElements] = useState(12);
   const [totalPage, setTotalPage] = useState(0);
   const [loader, setLoader] = useState(false);
 
@@ -21,12 +22,12 @@ export const App = () => {
         try {
           setLoader(true);
           const response = await axios.get(
-            `https://pixabay.com/api/?q=${search}&page=${page}&key=32799764-75091cc806dab77fae6a325d0&image_type=photo&orientation=horizontal&per_page=${ELEMENTS}`
+            `https://pixabay.com/api/?q=${search}&page=${page}&key=32799764-75091cc806dab77fae6a325d0&image_type=photo&orientation=horizontal&per_page=${elements}`
           );
 
-          if (response.data.hits.length > 0) {
+          if (response.data.hits.length) {
             setImages([...images, ...response.data.hits]);
-            setTotalPage(Math.ceil(response.data.total / ELEMENTS));
+            setTotalPage(Math.ceil(response.data.total / elements));
           }
         } catch (error) {
         } finally {
@@ -36,7 +37,7 @@ export const App = () => {
     };
 
     fetchImg();
-  }, [page, search]);
+  }, [page, search, elements]);
 
   const handleSearch = e => {
     e.preventDefault();
