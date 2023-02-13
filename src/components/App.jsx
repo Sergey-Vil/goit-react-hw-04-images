@@ -12,7 +12,6 @@ export const App = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
 
-  const [elements, setElements] = useState(12);
   const [totalPage, setTotalPage] = useState(0);
   const [loader, setLoader] = useState(false);
 
@@ -22,12 +21,12 @@ export const App = () => {
         try {
           setLoader(true);
           const response = await axios.get(
-            `https://pixabay.com/api/?q=${search}&page=${page}&key=32799764-75091cc806dab77fae6a325d0&image_type=photo&orientation=horizontal&per_page=${elements}`
+            `https://pixabay.com/api/?q=${search}&page=${page}&key=32799764-75091cc806dab77fae6a325d0&image_type=photo&orientation=horizontal&per_page=12`
           );
 
           if (response.data.hits.length) {
             setImages(prev => [...prev, ...response.data.hits]);
-            setTotalPage(Math.ceil(response.data.total / elements));
+            setTotalPage(Math.ceil(response.data.total / 12));
           }
         } catch (error) {
         } finally {
@@ -37,7 +36,7 @@ export const App = () => {
     };
 
     fetchImg();
-  }, [page, search, elements]);
+  }, [page, search]);
 
   const handleSearch = e => {
     e.preventDefault();
