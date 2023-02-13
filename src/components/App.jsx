@@ -26,7 +26,7 @@ export const App = () => {
           );
 
           if (response.data.hits.length) {
-            setImages([...images, ...response.data.hits]);
+            setImages(prev => [...prev, ...response.data.hits]);
             setTotalPage(Math.ceil(response.data.total / elements));
           }
         } catch (error) {
