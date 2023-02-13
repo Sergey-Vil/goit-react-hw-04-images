@@ -17,10 +17,8 @@ export const Modal = ({ img, onCloseModal }) => {
   }, [onCloseModal]);
 
   const handleOverlayClick = e => {
-    // console.log(e.currentTarget);
-    // console.log(e.target);
-    // console.log(e.currentTarget);
-    if (e.target !== e.currentTarget) {
+    e.stopPropagation();
+    if (e.target === e.currentTarget) {
       onCloseModal();
     }
   };
